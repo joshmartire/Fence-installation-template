@@ -92,8 +92,23 @@ async def main():
         ctx, pg = await page()
         await pg.goto(B + "/"); await pg.wait_for_timeout(3200)
         if CFG.get("hero_fx", True):
-            hf = await pg.evaluate("(()=>{const p=[...document.querySelectorAll('.hero-fence .hp')];return [p.length,p.filter(e=>e.getBoundingClientRect().height>0.5).length]})()")
-            rec(hf[0] > 100 and hf[1] == hf[0], "Hero fence line is drawn and every picket has risen", f"pickets={hf}")
+            # fallback hero (no WebGL / no three.js): block three.js and check the normal hero with its SVG fence line
+            fctx, fpg = await page()
+            await fpg.route("**/three.min.js*", lambda r: r.abort())
+            await fpg.goto(B + "/"); await fpg.wait_for_timeout(5000)
+            hf = await fpg.evaluate("(()=>{const p=[...document.querySelectorAll('.hero-fence .hp')];return [p.length,p.filter(e=>e.getBoundingClientRect().height>0).length,document.documentElement.classList.contains('yard-off'),getComputedStyle(document.querySelector('.yard')).position, document.querySelector('.yard').offsetHeight < innerHeight*1.5]})()")
+            rec(hf[0] > 100 and hf[1] == hf[0] and hf[2] and hf[4], "Without WebGL/three.js: normal hero (not pinned) with the SVG fence line drawn and every picket risen", f"{hf}")
+            await fctx.close()
+            errors[:] = [e for e in errors if "ERR_FAILED" not in e]   # the blocked three.js request above is deliberate
+        if CFG.get("yard_scene", True):
+            live = await pg.evaluate("document.documentElement.classList.contains('yard-live') && document.querySelector('.yard__pin') && getComputedStyle(document.querySelector('.yard__pin')).position==='sticky'")
+            await pg.evaluate("window.__yardSeek(0.5)"); await pg.wait_for_timeout(300)
+            mid = await pg.evaluate("[parseInt(document.querySelector('.yard__ft b').textContent,10), !!document.querySelector('.ymsg.is-on')]")
+            await pg.evaluate("window.__yardSeek(0.99)"); await pg.wait_for_timeout(1200)
+            end = await pg.evaluate("[document.querySelector('.yard__ft b').textContent, document.querySelector('[data-yard]').classList.contains('is-end'), document.querySelectorAll('.ytag.is-safe').length, getComputedStyle(document.querySelector('.yard .hero__est')).opacity]")
+            rec(live and 0 < mid[0] < 256 and mid[1] and end[0] == "256" and end[1] and end[2] == 4 and end[3] == "1",
+                "3D yard scene: pinned, fence builds around the yard (footage climbs to 256 ft), messages show, all 4 tags flip to Protected, estimate card appears at the end", f"live={live} mid={mid} end={end}")
+            await pg.evaluate("window.__yardSeek(0); window.scrollTo(0,0)"); await pg.wait_for_timeout(300)
         cls = await pg.evaluate("""new Promise(r=>{let v=0;new PerformanceObserver(l=>{for(const e of l.getEntries())if(!e.hadRecentInput)v+=e.value}).observe({type:'layout-shift',buffered:true});setTimeout(()=>r(v),300)})""")
         rec(cls < 0.1, f"Home page layout shift (CLS) {cls:.3f} < 0.1")
         n = await pg.evaluate("document.querySelectorAll('.sequence__stage > .fence-card').length")

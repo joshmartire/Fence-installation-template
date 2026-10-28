@@ -4,8 +4,9 @@ PASS Intro does not replay on the next page in the same session
 PASS Intro skipped when the URL has a #hash
 PASS Intro skipped for reduced motion
 PASS A click skips the intro
-PASS Hero fence line is drawn and every picket has risen
-PASS Home page layout shift (CLS) 0.009 < 0.1
+PASS Without WebGL/three.js: normal hero (not pinned) with the SVG fence line drawn and every picket risen
+PASS 3D yard scene: pinned, fence builds around the yard (footage climbs to 256 ft), messages show, all 4 tags flip to Protected, estimate card appears at the end
+PASS Home page layout shift (CLS) 0.010 < 0.1
 PASS Pinned sequence builds all 5 fence types from empty holes to finished fence as you scroll
 PASS Sequence ends on the last fence fully built (Built, 100%)
 PASS Services dropdown opens and stays inside the window
@@ -33,4 +34,4 @@ PASS axe WCAG 2.1 AA on /contact/: 0 violations
 PASS axe WCAG 2.1 AA on /service-areas/windsor/: 0 violations
 PASS No JavaScript errors in the console (0)
 
-34 passed, 0 failed
+35 passed, 0 failed

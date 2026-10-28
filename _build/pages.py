@@ -30,6 +30,20 @@ def home(cfg, cities, services=None, all_offered=True):
         "lead": "Wood, vinyl, ornamental, chain link and composite fences on posts set below frost, priced in writing and built straight. See a ballpark for your fence in about a minute.",
         # CLIENT REVIEW: confirm these badges describe how the client actually works.
         "tags": ["Written, itemized quotes", "Utility locates before every dig", "Posts set below frost"],
+        # 3D yard scroll scene at the top of the home page (assets/js/yard.js). "steps" label the build stages in the HUD;
+        # "messages" appear one after another while the fence goes up around the yard; "tags" float over the family,
+        # the dog, the shed and the pool and flip to "Protected" when the gate latches.
+        "yard": {
+            "steps": ["Layout & locates", "Posts in", "Pickets on", "Gate & latch", "Protected"],
+            "messages": [
+                ("Your family.", "Room for the kids to run, without one eye on the street."),
+                ("Your pets.", "The dog stays in. Everyone else's stays out."),
+                ("Your belongings.", "Bikes, tools and the patio set, behind a line nobody crosses uninvited."),
+                ("Your privacy.", "Six feet of cedar between your backyard and the rest of the block."),
+            ],
+            "final": ("Protected.", "Private. Secure. Yours."),
+            "tags": [("family", "Family"), ("pets", "Pets"), ("belongings", "Belongings"), ("privacy", "Privacy")],
+        },
         "statement_eyebrow": "It starts underground.",
         "statement": "Anyone can hang pickets. What keeps a fence straight for twenty winters is the part you never see: post depth, drainage, concrete and spacing. That's where we put the most care.",
         "statement_points": [

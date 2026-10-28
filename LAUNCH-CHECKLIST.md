@@ -16,7 +16,8 @@ Template build: October 27, 2026. Sample business "Stakeline Fence Co." with pla
 - Opening animation is on exactly the 65 indexable pages, never the 404 or thank-you page. The estimate page carries the config prices; the home picker submits to it. The scroll sequence has one complete fence build per offered fence type.
 - Removing services was tested (composite, staining and farm removed): their pages, links, menu items, the composite fence in the scroll sequence, the composite estimate material and the stain extra disappear, and the sentences that mention them are listed for rewording.
 
-**Browser QA** (`python3 _build/qa_browser.py --axe axe.min.js`, headless Chromium at 1440×900 and 390×844, output in `_build/qa-browser-latest.txt`): 34 passed, 0 failed.
+**Browser QA** (`python3 _build/qa_browser.py --axe axe.min.js`, headless Chromium at 1440×900 and 390×844, output in `_build/qa-browser-latest.txt`): 35 passed, 0 failed.
+- **3D yard scene:** pinned; the fence builds around the yard (feet counter climbs to 256), messages play, all four tags flip to Protected and the estimate card appears at the end. With three.js blocked, the page falls back to the normal, unpinned hero with the SVG fence line.
 - Opening animation plays when landing on a service page, builds the gates (3 posts, 20 pickets), swings them open, clears itself and doesn't replay on the next page. Skipped for a `#hash` and reduced motion; a click skips it.
 - Hero fence line draws and every picket rises. Home page CLS under 0.01.
 - **Scroll sequence:** for each of the 5 fence types, the posts are not yet in at the start of its slot and every post, picket/panel/board and cap is fully in place by the end; the sequence finishes on "Built, 100%". With reduced motion there's no pinning and all five fences show fully built.
@@ -43,6 +44,8 @@ Template build: October 27, 2026. Sample business "Stakeline Fence Co." with pla
 | Lifespan and upkeep figures in the scroll sequence match what they tell customers | `pages.py` → `fence_types` |
 | Real About story, insurance and WSIB, warranties, suppliers | `pages.py` → `about` |
 | Real job photos | `photos` in config |
+| Confirm the yard scene's messages fit the client (family, pets, belongings, privacy) | `pages.py` → `yard` |
+| **Test the 3D scene on a real iPhone and Android phone** (headless testing uses software rendering) | home page |
 | Legal review of Privacy, Terms, Cookie drafts | `pages.py` |
 
 ## 2. Manual launch tasks
@@ -64,7 +67,7 @@ City pages state each town's fence and pool enclosure rules as published in Octo
 - `lang="en-CA"`, unique title and description, canonical, Open Graph and Twitter card on every page; favicon set and 1200×630 share image generated in the brand colours.
 - Schema: one `HomeAndConstructionBusiness` (`/#business`) on home; `Service` on service and city pages; `BreadcrumbList` matching visible breadcrumbs; `WebSite`, `ItemList`, `ContactPage`, `WebApplication` (estimate). No reviews, ratings, prices or FAQ markup.
 - Internal linking: mega menu and footer link every service; each service links its 3 city pages and related services; city pages cross-link and link the hub; the estimate is linked from the nav, footer, hero, asides, CTAs and city pages.
-- Performance: no images or video anywhere in the template (every drawing is inline SVG built at compile time), self-hosted fonts, one ~79 KB stylesheet, 17 KB of deferred site JS and 10 KB more on the estimate page. The scroll sequence updates one CSS variable per frame.
+- Performance: the home page loads three.js (about 150 KB compressed, self-hosted) for the 3D yard scene; other pages don't. No images or video anywhere in the template (every drawing is inline SVG built at compile time), self-hosted fonts, one ~79 KB stylesheet, 17 KB of deferred site JS and 10 KB more on the estimate page. The scroll sequence updates one CSS variable per frame.
 - Privacy: no cookies, no analytics, no third-party requests; one sessionStorage flag for the intro.
 
 ## 6. URL structure and redirects

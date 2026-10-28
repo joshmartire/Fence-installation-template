@@ -1,5 +1,5 @@
 {
-  "_README": "Edit these values for each client, then run: python3 _build/build.py && python3 _build/qa.py. Values marked SAMPLE must be replaced before launch. Keep demo_mode true until real client details are in; it adds noindex to every page and the yellow demo banner. accent: brand colour #rrggbb used for buttons and highlights (the build stops if it is too dark to read). accent_alt: the second colour used for steel and metal details and the gradient (#rrggbb). logo: path to the client's logo, e.g. assets/img/client/logo.png (transparent PNG best); empty = built-in mark + name. services: remove any slug the client does not offer, then fix any sentences listed in _build/removed-service-mentions.txt. photos: the client's own job photos only (see _build/photos.py). intro: false turns the opening animation off; intro_scope 'all' plays it on whichever page a visitor lands on first, 'home' limits it to the home page. hero_fx: false turns off the fence line drawn behind the home hero. locate_service / locate_url: the free call-before-you-dig service for the client's province or state (Ontario One Call in Ontario, 811 in the US). estimator: see the _README inside it.",
+  "_README": "Edit these values for each client, then run: python3 _build/build.py && python3 _build/qa.py. Values marked SAMPLE must be replaced before launch. Keep demo_mode true until real client details are in; it adds noindex to every page and the yellow demo banner. accent: brand colour #rrggbb used for buttons and highlights (the build stops if it is too dark to read). accent_alt: the second colour used for steel and metal details and the gradient (#rrggbb). logo: path to the client's logo, e.g. assets/img/client/logo.png (transparent PNG best); empty = built-in mark + name. services: remove any slug the client does not offer, then fix any sentences listed in _build/removed-service-mentions.txt. photos: the client's own job photos only (see _build/photos.py). intro: false turns the opening animation off; intro_scope 'all' plays it on whichever page a visitor lands on first, 'home' limits it to the home page. hero_fx: false turns off the fence line drawn behind the home hero (also the fallback behind the 3D scene). yard_scene: false turns off the 3D yard scroll scene at the top of the home page (a fence built around a backyard as you scroll). locate_service / locate_url: the free call-before-you-dig service for the client's province or state (Ontario One Call in Ontario, 811 in the US). estimator: see the _README inside it.",
   "demo_mode": true,
   "business_name": "Stakeline Fence Co.",
   "legal_name": "Stakeline Fence Co.",
@@ -13,6 +13,7 @@
   "intro": true,
   "intro_scope": "all",
   "hero_fx": true,
+  "yard_scene": true,
   "locate_service": "Ontario One Call",
   "locate_url": "https://www.ontarioonecall.ca/",
   "services": [

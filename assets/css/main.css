@@ -906,3 +906,72 @@ fieldset{border:0;margin:0;padding:0;min-width:0}
 @media (max-width:700px){.work-grid{grid-template-columns:1fr}}
 /* ---- end client work photos ---- */
 .js:not(.reduced) .sequence .fence-svg{overflow:hidden}
+
+/* ======================= 3D YARD SCROLL SCENE (home hero, assets/js/yard.js) =======================
+   With WebGL and motion allowed, the hero is pinned for several screens while a fence is built around the yard.
+   Otherwise (.yard-off, reduced motion, no JavaScript) it stays the normal hero above, with the SVG fence line. */
+.yard__canvas{position:absolute;inset:0;width:100%;height:100%;max-width:none;opacity:0;transition:opacity 1.2s var(--ease)}
+.yard__hud,.yard__tags,.yard__msgs{display:none}
+@media (prefers-reduced-motion:no-preference){
+  .js:not(.yard-off) .yard{height:620vh;min-height:0;display:block;padding:0;overflow:visible}
+  .js:not(.yard-off) .yard__pin{position:sticky;top:0;height:100vh;height:100svh;overflow:hidden;display:flex;flex-direction:column;justify-content:center;padding:calc(var(--header-h) + var(--demo-h) + 30px) 0 110px}
+  .js:not(.yard-off) .yard .hero__media{transform:none!important}
+}
+.yard-live .yard__canvas{opacity:1}
+.yard-live .yard .hero-fence,.yard-live .yard .hero__glow{opacity:0;transition:opacity 1s}
+.yard-live .yard .hero__title{text-shadow:none}
+.yard-live .yard .hero__copy{filter:drop-shadow(0 4px 24px rgba(0,0,0,.55))}
+.yard-live .yard .hero__shade{transition:opacity .6s;background:linear-gradient(90deg,rgba(10,10,11,.86) 0%,rgba(10,10,11,.5) 38%,transparent 62%),linear-gradient(180deg,rgba(10,10,11,.55) 0%,transparent 22%,transparent 78%,rgba(10,10,11,.75) 100%)}
+.yard-live .yard__hud,.yard-live .yard__tags,.yard-live .yard__msgs{display:block}
+.yard .hero__grid{position:relative;z-index:4}
+/* hero copy fades out as you start building, the estimate card arrives at the end */
+.yard-live .yard .hero__copy{transition:opacity .5s,transform .6s var(--ease)}
+.yard-live .yard:not(.is-start) .hero__copy{opacity:0;transform:translateY(-24px);pointer-events:none}
+.yard-live .yard .hero__est{transition:opacity .6s,transform .7s var(--ease)}
+.yard-live .yard:not(.is-start):not(.is-end) .hero__est{opacity:0;transform:translateX(30px);pointer-events:none}
+.yard-live .yard.is-end .hero__copy{opacity:0}
+.yard-live .yard .hero__tags{transition:opacity .4s}
+.yard-live .yard:not(.is-start) .hero__tags,.yard-live .yard:not(.is-start) .scroll-cue{opacity:0}
+.yard-live .yard .scroll-cue{bottom:28px}
+/* HUD: build step, footage counter, progress */
+.yard__hud{position:absolute;left:0;right:0;bottom:0;z-index:3;padding:14px max(var(--gutter),env(safe-area-inset-left,0px)) 16px;background:linear-gradient(transparent,rgba(10,10,11,.75));opacity:0;transition:opacity .5s}
+.yard:not(.is-start) .yard__hud{opacity:1}
+.yard__hud{display:none}
+.yard-live .yard__hud{display:grid;grid-template-columns:1fr auto;align-items:end;gap:6px 20px}
+.yard__step{font-family:var(--label);font-weight:600;letter-spacing:.24em;text-transform:uppercase;font-size:.9rem;color:var(--accent)}
+.yard__ft{font-family:var(--mono);font-weight:500;font-size:.82rem;letter-spacing:.12em;color:var(--muted)}
+.yard__ft b{font-weight:500;font-size:1.6rem;color:var(--text);letter-spacing:0;margin-right:6px;font-variant-numeric:tabular-nums}
+.yard__meter{grid-column:1/-1;display:block;height:3px;background:rgba(255,255,255,.12);border-radius:2px;overflow:hidden}
+.yard__meter b{display:block;height:100%;background:var(--grad);transform-origin:0 50%;transform:scaleX(0)}
+/* big messages while the fence goes up */
+.yard__msgs{position:absolute;left:0;right:0;top:calc(var(--header-h) + var(--demo-h) + 6vh);z-index:3;pointer-events:none;padding:0 max(var(--gutter),env(safe-area-inset-left,0px))}
+.ymsg{position:absolute;left:max(var(--gutter),calc((100% - var(--wrap)) / 2 + var(--gutter)));right:var(--gutter);max-width:720px}
+.ymsg__k{margin:0;font-family:var(--display);text-transform:uppercase;font-size:clamp(3rem,8.4vw,8.4rem);line-height:.9;color:var(--text);text-shadow:0 8px 40px rgba(0,0,0,.6);clip-path:inset(0 0 100% 0);transform:translateY(30px);transition:clip-path .6s var(--ease),transform .7s var(--ease)}
+.ymsg__s{margin:14px 0 0;max-width:30ch;font-size:clamp(1.05rem,1.7vw,1.35rem);line-height:1.45;color:#ece6dc;text-shadow:0 2px 14px rgba(0,0,0,.8);opacity:0;transform:translateY(14px);transition:opacity .5s,transform .6s var(--ease)}
+.ymsg.is-on .ymsg__k{clip-path:inset(-10px -10px -20px -10px);transform:none}
+.ymsg.is-on .ymsg__s{opacity:1;transform:none;transition-delay:.15s}
+.ymsg--final .ymsg__k{color:var(--accent);font-size:clamp(3.4rem,10vw,10rem);text-shadow:0 0 40px color-mix(in srgb,var(--accent) 45%,transparent),0 8px 40px rgba(0,0,0,.6)}
+/* tags that float over the family, the dog, the shed and the pool */
+.yard__tags{position:absolute;inset:0;z-index:2;pointer-events:none}
+.ytag{position:absolute;left:0;top:0;display:flex;align-items:center;gap:8px;padding:6px 12px 6px 8px;border-radius:999px;background:rgba(10,10,11,.72);border:1px solid rgba(255,255,255,.18);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);font-family:var(--label);font-weight:600;letter-spacing:.14em;text-transform:uppercase;font-size:.78rem;color:var(--text);white-space:nowrap;margin:-34px 0 0 -40px;opacity:0;transition:opacity .4s,background .4s,border-color .4s,color .4s,box-shadow .4s;will-change:transform}
+.ytag::after{content:"";position:absolute;left:38px;top:100%;width:1px;height:14px;background:rgba(255,255,255,.4)}
+.ytag.is-vis{opacity:1}
+.ytag i{display:grid;place-items:center;width:22px;height:22px;border-radius:50%;background:rgba(255,255,255,.1)}
+.ytag svg{width:13px;height:13px}
+.ytag .lk-c{display:none}
+.ytag em{font-style:normal;max-width:0;overflow:hidden;opacity:0;transition:max-width .5s var(--ease),opacity .4s}
+.ytag.is-safe{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);box-shadow:0 0 30px color-mix(in srgb,var(--accent) 55%,transparent);transition-delay:calc(var(--i) * 120ms)}
+.ytag.is-safe i{background:rgba(0,0,0,.15)}
+.ytag.is-safe .lk-o{display:none}.ytag.is-safe .lk-c{display:inline}
+.ytag.is-safe em{max-width:120px;opacity:1;transition-delay:calc(var(--i) * 120ms + .1s)}
+.ytag.is-safe em::before{content:"· "}
+@media (max-width:900px){
+  .js:not(.yard-off) .yard__pin{justify-content:flex-start;padding-top:calc(var(--header-h) + var(--demo-h) + 20px)}
+  .yard-live .yard .hero__est{position:absolute;left:var(--gutter);right:var(--gutter);bottom:88px;max-width:none}
+  .yard-live .yard.is-start .hero__est{opacity:0;pointer-events:none;visibility:hidden}
+  .yard-live .yard .hero__tags{display:none}
+  .ymsg__k{font-size:clamp(2.8rem,14vw,4.6rem)}
+  .ytag{font-size:.68rem;padding:4px 10px 4px 6px}
+  .yard-live .yard.is-end .ymsg--final{top:-2vh}
+}
+@media (max-width:900px) and (max-height:760px){.yard-live .yard.is-end .ymsg--final .ymsg__s{display:none}}

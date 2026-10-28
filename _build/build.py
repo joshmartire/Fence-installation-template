@@ -68,6 +68,7 @@ if EST_ON:
 INTRO_ON = bool(CFG.get("intro", True))
 INTRO_SCOPE = CFG.get("intro_scope", "all")
 FX_ON = bool(CFG.get("hero_fx", True))
+YARD_ON = bool(CFG.get("yard_scene", True))   # the 3D yard scroll scene at the top of the home page
 LOCATES = CFG.get("locate_service") or "your local call-before-you-dig service"
 
 def and_join(items):
@@ -808,8 +809,18 @@ def build_home():
     else:
         hero_side = f'<div class="hero__est hero__est--plain intro-fade" style="--d:450ms"><p class="hero__est-title">Fence down after a storm?</p><p class="hero__est-text">Call and we\'ll get it back up.</p><a class="btn btn--primary" href="tel:{TEL}">{ui("phone")} {PHONE}</a></div>'
         est_section = ""
-    content = f'''<section class="hero" aria-labelledby="hero-title">
-<div class="hero__media" aria-hidden="true">{fx}<div class="hero__glow"></div><div class="hero__shade"></div></div>
+    y = p["yard"]
+    lock = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" focusable="false"><path class="lk-o" d="M7 11V7a5 5 0 0 1 9.6-1.9"/><path class="lk-c" d="M7 11V7a5 5 0 0 1 10 0v4"/><rect x="4" y="11" width="16" height="10" rx="2"/></svg>'
+    ytags = "".join(f'<span class="ytag" data-tag="{k}" style="--i:{i}"><i>{lock}</i><b>{html.escape(l)}</b><em>Protected</em></span>' for i, (k, l) in enumerate(y["tags"]))
+    ymsgs = "".join(f'<div class="ymsg" data-msg="{i}"><p class="ymsg__k">{html.escape(a)}</p><p class="ymsg__s">{html.escape(b)}</p></div>' for i, (a, b) in enumerate(y["messages"]))
+    ymsgs += f'<div class="ymsg ymsg--final" data-msg="final"><p class="ymsg__k">{html.escape(y["final"][0])}</p><p class="ymsg__s">{html.escape(y["final"][1])}</p></div>'
+    ysteps = json.dumps(y["steps"]).replace('"', "&quot;")
+    content = f'''<section class="hero yard" aria-labelledby="hero-title" data-yard data-steps="{ysteps}">
+<div class="yard__pin">
+<div class="hero__media" aria-hidden="true">{fx}<div class="hero__glow"></div><canvas class="yard__canvas"></canvas><div class="hero__shade"></div></div>
+<div class="yard__hud" aria-hidden="true"><span class="yard__step">{html.escape(y["steps"][0])}</span><span class="yard__ft"><b>000</b> FT BUILT</span><i class="yard__meter"><b></b></i></div>
+<div class="yard__tags" aria-hidden="true">{ytags}</div>
+<div class="yard__msgs" aria-hidden="true">{ymsgs}</div>
 <div class="wrap hero__grid">
 <div class="hero__copy">
 <h1 id="hero-title"><span class="eyebrow intro-fade" style="--d:0ms">{p["eyebrow"]}</span><span class="display hero__title" data-split style="--base-delay:150ms"><span class="line">Set deep.</span> <span class="line">Built <span class="hl">straight.</span></span></span></h1>
@@ -820,7 +831,8 @@ def build_home():
 {hero_side}
 </div>
 <ul class="hero__tags intro-fade" style="--d:1100ms">{tags}</ul>
-<div class="scroll-cue" aria-hidden="true"><span>Scroll</span><i></i></div>
+<div class="scroll-cue" aria-hidden="true"><span>Scroll to build</span><i></i></div>
+</div>
 </section>
 <div class="marquee" aria-hidden="true"><div class="marquee__track"><div class="marquee__group">{marquee_items}</div><div class="marquee__group">{marquee_items}</div></div></div>
 <section class="section statement" aria-labelledby="statement-title">
@@ -867,7 +879,8 @@ def build_home():
 </section>
 {cta_band(here)}'''
     website = {"@type": "WebSite", "@id": DOMAIN + "/#website", "url": DOMAIN + "/", "name": BIZ, "publisher": {"@id": DOMAIN + "/#business"}, "inLanguage": "en-CA"}
-    page(here, title=f"{BIZ} | Fence Company, {CFG['region_label']}", desc=p["desc"], body=content, active="home", schema=[business_entity(), website], body_class="home")
+    scripts = (f'<script src="{vasset(here, "js/vendor/three.min.js")}" defer></script><script src="{vasset(here, "js/yard.js")}" defer></script>' if YARD_ON else "")
+    page(here, title=f"{BIZ} | Fence Company, {CFG['region_label']}", desc=p["desc"], body=content, active="home", schema=[business_entity(), website], body_class="home", scripts_extra=scripts)
 
 MAT_NOTES = {
     "wood": "natural, private and easy to repair; stain every few years to make it last.",
