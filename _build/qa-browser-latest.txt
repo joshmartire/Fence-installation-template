@@ -1,5 +1,5 @@
 PASS Opening animation plays when landing on /services/wood-fences/ and clears itself
-PASS Intro tape measure counts up while playing
+PASS Intro builds the gates: 3 posts and 20 pickets
 PASS Intro does not replay on the next page in the same session
 PASS Intro skipped when the URL has a #hash
 PASS Intro skipped for reduced motion

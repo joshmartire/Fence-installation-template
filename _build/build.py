@@ -190,17 +190,43 @@ LOGO_MARK = ('<svg class="brand__mark" viewBox="0 0 40 40" aria-hidden="true" fo
              '<path d="M26 37V12l4.5-5 4.5 5v25z" fill="currentColor"/>'
              '<rect x="2" y="16" width="36" height="3.4" rx="1" fill="var(--alt)"/><rect x="2" y="28" width="36" height="3.4" rx="1" fill="var(--alt)"/></svg>')
 
-# ------------------------------------------------------------------ opening animation (post drop + tape measure + name)
+# ------------------------------------------------------------------ opening animation: "the gates"
+# Posts slam into the ground (screen shake, dust, sparks), the gate frames snap together, charred pickets rain down
+# from the centre outward with amber light bleeding through the gaps, the business name is branded into the wood,
+# then both gates swing open to reveal the page. Timings live in main.css (OPENING ANIMATION); main.js only starts
+# it, lets a tap or key skip it, and removes it at the end.
+INTRO_PICKETS = 10   # per gate
+
+def _sparks(x_pct, delay_ms, n=12, seed=1):
+    out = ""
+    for i in range(n):
+        a = math.radians(200 + (i * 137.5 + seed * 53) % 140)      # upward fan
+        d = 60 + ((i * 71 + seed * 29) % 120)
+        out += (f'<i style="left:{x_pct}%;--dx:{math.cos(a) * d:.0f}px;--dy:{math.sin(a) * d:.0f}px;'
+                f'--dl:{delay_ms + (i % 4) * 12}ms"></i>')
+    return out
+
 def intro_markup():
+    def gate(side):
+        pk = "".join(f'<span class="ig-pk" style="--i:{i}"></span>' for i in range(INTRO_PICKETS))
+        return (f'<div class="ig ig--{side}"><div class="ig__face">{pk}'
+                f'<span class="ig-rail ig-rail--1"></span><span class="ig-rail ig-rail--2"></span><span class="ig-brace"></span>'
+                f'<span class="ig-stile"></span></div></div>')
+    landings = [(2.5, 380), (97.5, 520), (50, 660)]   # outer posts, then the latch post in the middle
+    posts = "".join(f'<span class="ip" style="left:{x}%;--dl:{t - 260}ms"></span>' for x, t in landings)
+    dust = "".join(f'<span class="id" style="left:{x}%;--dl:{t}ms"></span>' for x, t in landings)
+    sparks = "".join(_sparks(x, t, seed=k) for k, (x, t) in enumerate(landings))
+    words = BIZ.split(" ")
+    name = html.escape(words[0]) + (f' <span>{html.escape(" ".join(words[1:]))}</span>' if len(words) > 1 else "")
     return f'''<div class="intro" aria-hidden="true">
-<div class="intro__panel intro__panel--top"></div><div class="intro__panel intro__panel--bot"></div>
-<div class="intro__inner"><div class="intro__stage">
-{FA.intro_svg()}
-<div class="intro__read"><span class="intro__count" data-from="0" data-to="150" data-pad="3">000</span><sup>FT</sup></div>
-<p class="intro__name">{html.escape(BIZ)}</p>
-<div class="intro__meta"><span>{html.escape(CFG["region_label"])}</span><span>Posts below frost</span></div>
-<div class="intro__bar"><i></i></div>
-</div></div></div>'''
+<div class="intro__stage">
+<div class="intro__light"></div><div class="intro__ground"></div>
+{gate("l")}{gate("r")}
+{posts}<div class="intro__dust">{dust}</div><div class="intro__sparks">{sparks}</div>
+<div class="intro__brand"><p class="intro__name">{name}</p>
+<div class="intro__meta"><span>{html.escape(CFG["region_label"])}</span><i></i><span>Built post by post</span></div></div>
+<div class="intro__flash"></div>
+</div></div>'''
 
 # ------------------------------------------------------------------ url helpers
 def url_of(path):

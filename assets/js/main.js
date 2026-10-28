@@ -47,31 +47,20 @@
   if (playing) {
     try { sessionStorage.setItem("fn-intro", "1"); } catch (e) {}
     doc.classList.add("intro-on");
-    var count = intro.querySelector(".intro__count");
-    var start = performance.now(), dur = 1900, finished = false;
+    var finished = false;
+    /* the build runs on CSS timings (main.css); at BUILT the gates swing open */
+    var BUILT = 3150;
     var finish = function () {
       if (finished) return; finished = true;
       intro.classList.add("is-done");
-      setTimeout(ready, 380);
+      setTimeout(ready, 600);
       setTimeout(function () {
         doc.classList.remove("intro-on"); doc.classList.add("intro-done");
         if (intro.parentNode) intro.parentNode.removeChild(intro);
-      }, 1250);
+      }, 1900);
     };
-    var tick = function (now) {
-      if (finished) return;
-      var t = Math.min(1, (now - start) / dur);
-      var e = 1 - Math.pow(1 - t, 3);
-      intro.style.setProperty("--t", e.toFixed(3));
-      if (count) {
-        var from = parseFloat(count.getAttribute("data-from")), to = parseFloat(count.getAttribute("data-to"));
-        var pad = parseInt(count.getAttribute("data-pad") || "3", 10);
-        count.textContent = String(Math.round(from + (to - from) * Math.max(0, (e - 0.2) / 0.8))).padStart(pad, "0");
-      }
-      if (t < 1) requestAnimationFrame(tick); else setTimeout(finish, 180);
-    };
-    requestAnimationFrame(tick);
-    var skip = function () { finish(); window.removeEventListener("pointerdown", skip); window.removeEventListener("keydown", skip); };
+    var t = setTimeout(finish, BUILT);
+    var skip = function () { clearTimeout(t); intro.classList.add("is-skip"); finish(); window.removeEventListener("pointerdown", skip); window.removeEventListener("keydown", skip); };
     window.addEventListener("pointerdown", skip); window.addEventListener("keydown", skip);
   } else {
     if (intro && intro.parentNode) intro.parentNode.removeChild(intro);

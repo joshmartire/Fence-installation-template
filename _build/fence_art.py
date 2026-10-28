@@ -8,7 +8,6 @@ Drawings for the fence template, all generated as inline SVG (no images, nothing
                         sets --b (build progress) on the card and CSS works out each part's own progress (--q).
                         Used by the pinned scroll sequence on the home page and the estimate preview.
   hero_fence_svg()      a perspective fence line receding to the horizon behind the home hero
-  intro_svg()           the opening animation: a post drops in and a tape measure runs out
   yard_plan_svg()       top-down yard with a fence line being measured (home estimate teaser)
   locate_plan_svg()     top-down lot with the property line and utility locate marks (home "know the line" band)
 
@@ -344,20 +343,6 @@ def hero_fence_svg():
 <g class="hero-fence__rails">{rail(0.2)}{rail(0.78)}</g>
 <g class="hero-fence__pk">{"".join(pickets)}{"".join(posts)}</g>
 <path class="hero-fence__edge" d="M{proj(0)[0]:.1f} {proj(0)[1] - proj(0)[2]:.1f}{"".join(f"L{proj(i)[0]:.1f} {proj(i)[1] - proj(i)[2]:.1f}" for i in range(2, 151, 2))}"/>
-</svg>'''
-
-
-# ---------------------------------------------------------------- opening animation: post drop + tape measure
-def intro_svg():
-    ticks = "".join(f'<path d="M{160 + i * 10} 147v{9 if i % 5 == 0 else 5}"/>' for i in range(42))
-    nums = "".join(f'<text x="{160 + i * 50}" y="168">{i * 5}</text>' for i in range(1, 9))
-    return f'''<svg class="intro__art" viewBox="0 0 600 220" focusable="false">
-<path class="intro__ground" d="M20 190H580"/>
-<g class="intro__post"><rect x="78" y="42" width="30" height="148" rx="2" fill="url(#fx-cedar-1)"/><path d="M76 42l17 -16 17 16z" fill="#a5652f"/></g>
-<g class="intro__dust"><circle cx="66" cy="186" r="7"/><circle cx="122" cy="185" r="6"/><circle cx="56" cy="180" r="4"/><circle cx="132" cy="179" r="4"/></g>
-<g class="intro__tape"><g class="intro__blade"><rect x="150" y="144" width="420" height="30" rx="2" fill="url(#fx-tape)"/><g class="intro__ticks">{ticks}</g><g class="intro__nums">{nums}</g></g>
-<g class="intro__hook"><rect x="150" y="140" width="6" height="38" rx="1"/></g>
-<g class="intro__case"><rect x="108" y="128" width="58" height="56" rx="12"/><circle cx="137" cy="156" r="13"/><circle cx="137" cy="156" r="4"/></g></g>
 </svg>'''
 
 
