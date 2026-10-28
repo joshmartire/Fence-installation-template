@@ -65,7 +65,7 @@ City pages state each town's fence and pool enclosure rules as published in Octo
 - `lang="en-CA"`, unique title and description, canonical, Open Graph and Twitter card on every page; favicon set and 1200×630 share image generated in the brand colours.
 - Schema: one `HomeAndConstructionBusiness` (`/#business`) on home; `Service` on service and city pages; `BreadcrumbList` matching visible breadcrumbs; `WebSite`, `ItemList`, `ContactPage`, `WebApplication` (estimate). No reviews, ratings, prices or FAQ markup.
 - Internal linking: mega menu and footer link every service; each service links its 3 city pages and related services; city pages cross-link and link the hub; the estimate is linked from the nav, footer, hero, asides, CTAs and city pages.
-- Performance: the home page loads three.js (about 150 KB compressed, self-hosted) for the 3D yard scene; other pages don't. No images or video anywhere in the template (every drawing is inline SVG built at compile time), self-hosted fonts, one ~79 KB stylesheet, 17 KB of deferred site JS and 10 KB more on the estimate page. The scroll sequence updates one CSS variable per frame.
+- Performance: the home page loads three.js (about 150 KB compressed, self-hosted) for the 3D yard scene; other pages don't. No images or video anywhere in the template (every drawing is inline SVG built at compile time), self-hosted fonts, one ~79 KB stylesheet, 17 KB of deferred site JS and 10 KB more on the estimate page.
 - Privacy: no cookies, no analytics, no third-party requests; one sessionStorage flag for the intro.
 
 ## 6. URL structure and redirects

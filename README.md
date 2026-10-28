@@ -36,7 +36,7 @@ Demo: `rankboss-fence.pages.dev` (noindexed). Same engine as the HVAC and roofin
 ```
 /                         published site (generated HTML, sitemap.xml, robots.txt, 404.html)
 /assets/css/main.css      all styles (design tokens at the top; "FENCE DRAWINGS" section drives the build animation)
-/assets/js/main.js        site interactions, intro, hero, scroll sequence (no dependencies)
+/assets/js/main.js        site interactions, intro, hero (no dependencies)
 /assets/js/estimate.js    the instant fence estimate + yard measuring helper
 /assets/js/yard.js        the 3D yard scroll scene at the top of the home page
 /assets/js/vendor/        three.js r147 (MIT licence included), loaded on the home page only
@@ -47,10 +47,10 @@ Demo: `rankboss-fence.pages.dev` (noindexed). Same engine as the HVAC and roofin
   content_services.py     ← service page copy + per-city paragraphs
   content_costs.py        ← "what affects the cost" and "questions to ask" per service
   content_cities.py       ← service-area cities: local conditions, by-laws and permits
-  pages.py                ← home, about, FAQ and legal copy (incl. the sequence's fence descriptions)
+  pages.py                ← home, about, FAQ and legal copy (incl. the yard scene messages)
   fence_art.py            ← every drawing: the five fence builds, hero fence line, intro, yard and lot plans
   build.py                ← generator (header, footer, nav, schema, sitemap, estimate page)
-  qa.py                   ← static checks (links, SEO, schema, word counts, contrast, sequence…)
+  qa.py                   ← static checks (links, SEO, schema, word counts, contrast…)
   qa_browser.py           ← browser checks (intro, hero, every fence build, estimator maths, axe)
 ```
 
