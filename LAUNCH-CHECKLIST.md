@@ -17,7 +17,7 @@ Template build: October 27, 2026. Sample business "Stakeline Fence Co." with pla
 - Removing services was tested (composite, staining and farm removed): their pages, links, menu items, the composite fence in the scroll sequence, the composite estimate material and the stain extra disappear, and the sentences that mention them are listed for rewording.
 
 **Browser QA** (`python3 _build/qa_browser.py --axe axe.min.js`, headless Chromium at 1440×900 and 390×844, output in `_build/qa-browser-latest.txt`): 34 passed, 0 failed.
-- Opening animation plays when landing on a service page, the tape measure counts up, it clears itself and doesn't replay on the next page. Skipped for a `#hash` and reduced motion; a click skips it.
+- Opening animation plays when landing on a service page, builds the gates (3 posts, 20 pickets), swings them open, clears itself and doesn't replay on the next page. Skipped for a `#hash` and reduced motion; a click skips it.
 - Hero fence line draws and every picket rises. Home page CLS under 0.01.
 - **Scroll sequence:** for each of the 5 fence types, the posts are not yet in at the start of its slot and every post, picket/panel/board and cap is fully in place by the end; the sequence finishes on "Built, 100%". With reduced motion there's no pinning and all five fences show fully built.
 - Services dropdown opens inside the window and Escape closes it. Mobile menu and mobile call bar work.

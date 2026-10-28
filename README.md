@@ -14,7 +14,7 @@ Demo: `rankboss-fence.pages.dev` (noindexed). Same engine as the HVAC and roofin
 
 | Section | Pages |
 |---|---|
-| Home | 1: post-drop + tape-measure opening animation, perspective fence-line hero with a material picker, the pinned fence-build sequence, estimate teaser with a yard plan, "know the line" locates band |
+| Home | 1: "gates" opening animation (posts slam in, pickets rain down, the name is branded in, the gates swing open), perspective fence-line hero with a material picker, the pinned fence-build sequence, estimate teaser with a yard plan, "know the line" locates band |
 | Instant Fence Estimate | 1 (`/fence-estimate/`), with a live preview of the chosen fence |
 | Services hub + 13 service pages | 14 (500–600 words each, including costs and FAQs) |
 | Service × city pages (13 × 3) | 39 (local intro, local conditions, by-laws/permits/locates, hiring checklist) |
@@ -86,9 +86,11 @@ Timeline: dig 0.02–0.20 · posts 0.12–0.30 · concrete 0.26–0.40 · rails 
 
 On phones it's the same build, stacked under the heading with one fence description at a time. With reduced motion or without JavaScript, there's no pinning: all five fences are shown fully built in a grid with their names. To add a sixth fence type, add it to `TYPES` in `fence_art.py` with a drawing function and an entry in `pages.py` → `fence_types`.
 
-## Opening animation
+## Opening animation: "the gates"
 
-A fence post drops into the ground with a puff of dust, a tape measure runs out from it while the readout counts to 150 FT, then the name stamps in and the panels split. It plays on **whichever page a visitor opens first** in a browser session (home page or a service page from Google), then never replays that visit. It's skipped for a `#hash`, for reduced-motion users and on the 404 and thank-you pages, and a tap or key press skips it. Headlines are in the HTML underneath from the first paint, so it never hides content from Google. `"intro_scope": "home"` limits it to the home page; `"intro": false` turns it off.
+A full-screen, about 3-second build: two hinge posts and a latch post slam into the ground with screen shake, dust and sparks; the rails and Z-braces of two gates snap across; charred pickets rain down from the centre outward while amber light bleeds through the gaps; the business name is branded into the wood with a flash and a final hit; then both gates swing open toward the viewer and the page appears in the light behind them. It's pure CSS and HTML (timings in `main.css`, OPENING ANIMATION), so it starts on first paint with nothing to download.
+
+It plays on **whichever page a visitor opens first** in a browser session (home page or a service page from Google), then never replays that visit. It's skipped for a `#hash`, for reduced-motion users and on the 404 and thank-you pages, and a tap or key press throws the gates open immediately. Headlines are in the HTML underneath from the first paint, so it never hides content from Google. `"intro_scope": "home"` limits it to the home page; `"intro": false` turns it off.
 
 ## How the instant estimate works
 
