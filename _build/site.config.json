@@ -1,0 +1,108 @@
+{
+  "_README": "Edit these values for each client, then run: python3 _build/build.py && python3 _build/qa.py. Values marked SAMPLE must be replaced before launch. Keep demo_mode true until real client details are in; it adds noindex to every page and the yellow demo banner. accent: brand colour #rrggbb used for buttons and highlights (the build stops if it is too dark to read). accent_alt: the second colour used for steel and metal details and the gradient (#rrggbb). logo: path to the client's logo, e.g. assets/img/client/logo.png (transparent PNG best); empty = built-in mark + name. services: remove any slug the client does not offer, then fix any sentences listed in _build/removed-service-mentions.txt. photos: the client's own job photos only (see _build/photos.py). intro: false turns the opening animation off; intro_scope 'all' plays it on whichever page a visitor lands on first, 'home' limits it to the home page. hero_fx: false turns off the fence line drawn behind the home hero. locate_service / locate_url: the free call-before-you-dig service for the client's province or state (Ontario One Call in Ontario, 811 in the US). estimator: see the _README inside it.",
+  "demo_mode": true,
+  "business_name": "Stakeline Fence Co.",
+  "legal_name": "Stakeline Fence Co.",
+  "short_tagline": "Fence Co.",
+  "region_label": "Windsor-Essex",
+  "province": "ON",
+  "country": "CA",
+  "accent": "#f5a524",
+  "accent_alt": "#9fb4c7",
+  "logo": "",
+  "intro": true,
+  "intro_scope": "all",
+  "hero_fx": true,
+  "locate_service": "Ontario One Call",
+  "locate_url": "https://www.ontarioonecall.ca/",
+  "services": [
+    "wood-fences",
+    "vinyl-fences",
+    "ornamental-fences",
+    "chain-link-fences",
+    "composite-fences",
+    "privacy-fences",
+    "pool-fences",
+    "farm-fences",
+    "commercial-fences",
+    "custom-gates",
+    "fence-repair",
+    "fence-staining",
+    "fence-removal"
+  ],
+  "photos": [],
+  "domain": "https://rankboss-fence.pages.dev",
+  "base_path": "/",
+  "phone_display": "(519) 555-0174",
+  "phone_e164": "+15195550174",
+  "email": "info@example.com",
+  "address": null,
+  "_address_example": {
+    "street": "123 Example St",
+    "city": "Windsor",
+    "region": "ON",
+    "postal": "N9A 0A0"
+  },
+  "hours": [
+    {
+      "days": ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"],
+      "label": "Monday to Friday",
+      "open": "07:30",
+      "close": "18:00"
+    },
+    {
+      "days": ["Saturday"],
+      "label": "Saturday",
+      "open": "08:00",
+      "close": "14:00"
+    }
+  ],
+  "hours_note": "Site visits and estimates by appointment",
+  "cta_label": "Get a Free Quote",
+  "form_endpoint": "https://formsubmit.co/info@example.com",
+  "form_provider_name": "FormSubmit (formsubmit.co)",
+  "google_business_profile_url": "",
+  "social_profiles": [],
+  "google_site_verification": "",
+  "privacy_contact": "info@example.com",
+  "legal_jurisdiction": "Ontario",
+  "policy_effective_date": "October 27, 2026",
+  "estimator": {
+    "_README": "Instant fence estimate (/fence-estimate/). Set the client's real installed prices before launch. Everything runs in the visitor's browser; nothing is sent until they submit the form. materials: each fence material the client installs. per_ft = typical installed price per linear foot (CAD) at 6 ft high on flat ground, including posts set in concrete, rails, infill, standard hardware and clean-up. heights = the heights offered for that material (ids from 'heights'). walk_gate / double_gate = installed price of one 4 ft walk gate / one 10-12 ft double drive gate in that material. Remove a material the client doesn't install. heights: mult = price multiplier against the 6 ft price. terrain: mult applied to the fence (not gates or extras). removal_per_ft: old fence tear-out and disposal per foot (0 hides the option). addons: per_ft (charged on the whole length) or flat; 'materials' limits which materials show it; 'service' hides it when the client doesn't offer that service. length: the slider range in feet. range_pct = how far the low/high ends sit from the middle (12 = -12%/+12%). minimum_job = smallest job the client takes. round_to = rounding for displayed numbers.",
+    "enabled": true,
+    "currency": "CAD",
+    "range_pct": 12,
+    "round_to": 50,
+    "minimum_job": 1500,
+    "length": {"min": 20, "max": 600, "step": 5, "default": 150},
+    "materials": [
+      {"id": "wood", "label": "Wood", "hint": "Cedar or pressure-treated privacy", "per_ft": 58, "heights": ["4", "5", "6"], "default_height": "6", "walk_gate": 550, "double_gate": 1250, "icon": "wood", "service": "wood-fences"},
+      {"id": "vinyl", "label": "Vinyl", "hint": "Privacy panels, never needs paint", "per_ft": 74, "heights": ["4", "5", "6"], "default_height": "6", "walk_gate": 780, "double_gate": 1750, "icon": "vinyl", "service": "vinyl-fences"},
+      {"id": "ornamental", "label": "Aluminum", "hint": "Ornamental, keeps the view open", "per_ft": 69, "heights": ["4", "5", "6"], "default_height": "5", "walk_gate": 820, "double_gate": 1950, "icon": "ornamental", "service": "ornamental-fences"},
+      {"id": "chain-link", "label": "Chain link", "hint": "Galvanized, tough and affordable", "per_ft": 34, "heights": ["4", "5", "6"], "default_height": "5", "walk_gate": 420, "double_gate": 980, "icon": "chainlink", "service": "chain-link-fences"},
+      {"id": "composite", "label": "Composite", "hint": "Horizontal boards on metal posts", "per_ft": 118, "heights": ["5", "6"], "default_height": "6", "walk_gate": 1150, "double_gate": 2600, "icon": "composite", "service": "composite-fences"}
+    ],
+    "default_material": "wood",
+    "heights": [
+      {"id": "4", "label": "4 ft", "mult": 0.78},
+      {"id": "5", "label": "5 ft", "mult": 0.9},
+      {"id": "6", "label": "6 ft", "mult": 1.0}
+    ],
+    "terrain": [
+      {"id": "flat", "label": "Mostly flat", "mult": 1.0},
+      {"id": "slope", "label": "Some slope", "mult": 1.08},
+      {"id": "steep", "label": "Steep or stepped", "mult": 1.18}
+    ],
+    "default_terrain": "flat",
+    "removal_per_ft": 9,
+    "addons": [
+      {"id": "stain", "label": "Stain & seal", "per_ft": 7, "materials": ["wood"], "service": "fence-staining"},
+      {"id": "lattice", "label": "Lattice top", "per_ft": 14, "materials": ["wood", "vinyl"]},
+      {"id": "black", "label": "Black vinyl coating", "per_ft": 8, "materials": ["chain-link"]},
+      {"id": "slats", "label": "Privacy slats", "per_ft": 11, "materials": ["chain-link"]},
+      {"id": "puppy", "label": "Puppy pickets", "per_ft": 9, "materials": ["ornamental"]},
+      {"id": "lights", "label": "Post cap lights", "flat": 480, "materials": ["wood", "vinyl", "composite"]}
+    ],
+    "max_gates": 6
+  }
+}

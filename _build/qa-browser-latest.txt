@@ -1,0 +1,36 @@
+PASS Opening animation plays when landing on /services/wood-fences/ and clears itself
+PASS Intro tape measure counts up while playing
+PASS Intro does not replay on the next page in the same session
+PASS Intro skipped when the URL has a #hash
+PASS Intro skipped for reduced motion
+PASS A click skips the intro
+PASS Hero fence line is drawn and every picket has risen
+PASS Home page layout shift (CLS) 0.009 < 0.1
+PASS Pinned sequence builds all 5 fence types from empty holes to finished fence as you scroll
+PASS Sequence ends on the last fence fully built (Built, 100%)
+PASS Services dropdown opens and stays inside the window
+PASS Escape closes the dropdown
+PASS Hero material picker opens the estimate with that material selected
+PASS Reduced motion: no pinning, every fence shown fully built
+PASS Default estimate matches config ($7,650 – $9,750)
+PASS Every material × height × ground × length combination matches the config (126 checked)
+PASS Gates, old fence removal and extras are added to the estimate
+PASS Extras that don't apply to the chosen material are hidden
+PASS Fence preview switches to the chosen material
+PASS Measure my yard: 50 × 110 ft yard, back and both sides = 270 ft
+PASS Lead form opens with the material, length, gates, extras and estimate filled in
+PASS Empty estimate form shows errors and focuses the first field
+PASS Phones: live price bar shows while the result card is off screen
+PASS Contact form: empty submit shows errors on required fields
+PASS Contact form: invalid email message
+PASS No horizontal scrolling at 390px on 12 key pages
+PASS Mobile menu opens from the burger button
+PASS Mobile call bar appears after scrolling
+PASS axe WCAG 2.1 AA on /: 0 violations
+PASS axe WCAG 2.1 AA on /fence-estimate/: 0 violations
+PASS axe WCAG 2.1 AA on /services/wood-fences/: 0 violations
+PASS axe WCAG 2.1 AA on /contact/: 0 violations
+PASS axe WCAG 2.1 AA on /service-areas/windsor/: 0 violations
+PASS No JavaScript errors in the console (0)
+
+34 passed, 0 failed
