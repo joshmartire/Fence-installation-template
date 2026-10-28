@@ -265,14 +265,6 @@ if _est.get("enabled", True):
     _hero = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
     (passes if 'action="fence-estimate/"' in _hero and 'name="material"' in _hero else fails).append("Home hero material picker submits to the instant estimate (works without JavaScript)")
 
-# 15 scroll sequence: one fence card per offered fence type, each with the full build
-_home = open(os.path.join(ROOT, "index.html"), encoding="utf-8").read()
-import fence_art as _FA
-_types = [t["id"] for t in _FA.TYPES if t["service"] in _offered]
-_cards = re.findall(r'<figure class="fence-card" data-fence="([a-z\-]+)"', _home)
-_parts_ok = all(_home.count(f'fence-svg--{t}') == 1 for t in _types) and _home.count('class="q f-post"') == 4 * len(_types)
-(passes if _cards == _types and _parts_ok else fails).append(f"Scroll sequence: {len(_cards)} fence builds ({', '.join(_cards)}), 4 posts each, matching the offered fence types")
-
 for l in passes: print("PASS ", l)
 for l in warns: print("WARN ", l)
 for l in fails: print("FAIL ", l)

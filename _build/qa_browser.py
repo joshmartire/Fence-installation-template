@@ -111,21 +111,6 @@ async def main():
             await pg.evaluate("window.__yardSeek(0); window.scrollTo(0,0)"); await pg.wait_for_timeout(300)
         cls = await pg.evaluate("""new Promise(r=>{let v=0;new PerformanceObserver(l=>{for(const e of l.getEntries())if(!e.hadRecentInput)v+=e.value}).observe({type:'layout-shift',buffered:true});setTimeout(()=>r(v),300)})""")
         rec(cls < 0.1, f"Home page layout shift (CLS) {cls:.3f} < 0.1")
-        n = await pg.evaluate("document.querySelectorAll('.sequence__stage > .fence-card').length")
-        top = await pg.evaluate("document.querySelector('.sequence').getBoundingClientRect().top+scrollY"); span = await pg.evaluate("document.querySelector('.sequence').offsetHeight-innerHeight")
-        okall, notes = True, []
-        for i in range(n):
-            await pg.evaluate(f"window.scrollTo(0,{top + span * (i + 0.03) / n})"); await pg.wait_for_timeout(250)
-            early = await pg.evaluate("(()=>{const c=document.querySelector('.fence-card.is-current');const p=c.querySelector('.f-post');return [c.dataset.fence, parseFloat(getComputedStyle(p).opacity), document.querySelector('.sequence__step.is-active h3').textContent]})()")
-            await pg.evaluate(f"window.scrollTo(0,{top + span * (i + 0.92) / n})"); await pg.wait_for_timeout(250)
-            late = await pg.evaluate("(()=>{const c=document.querySelector('.fence-card.is-current');const parts=[...c.querySelectorAll('.f-post,.f-drop,.f-panel,.f-board,.f-cap')];return [c.dataset.fence, parts.every(e=>parseFloat(getComputedStyle(e).opacity)>0.97), document.querySelector('.sequence__phase').textContent]})()")
-            good = early[0] == late[0] and early[1] < 0.5 and late[1]
-            okall = okall and good
-            if not good: notes.append(f"{i}: early={early} late={late}")
-        rec(n == len([x for x in OFFERED if x in ("wood-fences","vinyl-fences","ornamental-fences","chain-link-fences","composite-fences")]) and okall,
-            f"Pinned sequence builds all {n} fence types from empty holes to finished fence as you scroll", "; ".join(notes[:3]))
-        await pg.evaluate(f"window.scrollTo(0,{top + span})"); await pg.wait_for_timeout(300)
-        rec(await pg.evaluate("document.querySelector('.sequence__phase').textContent==='Built' && document.querySelector('.sequence__pct').textContent==='100%'"), "Sequence ends on the last fence fully built (Built, 100%)")
         # desktop menu
         await pg.evaluate("window.scrollTo(0,0)"); await pg.wait_for_timeout(400)
         await pg.click(".nav__item[data-dropdown] button"); await pg.wait_for_timeout(500)
@@ -136,13 +121,6 @@ async def main():
             await pg.evaluate("document.querySelector('.pick:nth-child(2) input').checked=true"); await pg.click(".picker__go"); await pg.wait_for_load_state(); await pg.wait_for_timeout(400)
             chosen = await pg.evaluate("(document.querySelector('#est-form input[name=material]:checked')||{}).value")
             rec("fence-estimate" in pg.url and chosen == E["materials"][1]["id"], "Hero material picker opens the estimate with that material selected", f"url={pg.url} chosen={chosen}")
-        await ctx.close()
-
-        # ---- reduced motion: sequence shows every fence built, no pinning
-        ctx, pg = await page(reduced=True)
-        await pg.goto(B + "/"); await pg.wait_for_timeout(500)
-        st = await pg.evaluate("(()=>{const s=document.querySelector('.sequence');const cards=[...s.querySelectorAll('.fence-card')];return [getComputedStyle(s.querySelector('.sequence__sticky')).position, cards.every(c=>getComputedStyle(c).opacity==='1' && parseFloat(getComputedStyle(c.querySelector('.f-post')).opacity)>0.99)]})()")
-        rec(st[0] != "sticky" and st[1], "Reduced motion: no pinning, every fence shown fully built", str(st))
         await ctx.close()
 
         # ---- estimator maths

@@ -6,21 +6,20 @@ Template build: October 27, 2026. Sample business "Stakeline Fence Co." with pla
 
 ### Passed (verified by running tests, not by reading code)
 
-**Static QA** (`python3 _build/qa.py`, output in `_build/qa-latest.txt`): 32 passed, 0 warnings, 0 failed.
+**Static QA** (`python3 _build/qa.py`, output in `_build/qa-latest.txt`): 31 passed, 0 warnings, 0 failed.
 - 67 pages; 0 broken internal links or assets; 0 orphan pages.
 - 65 indexable pages: unique titles and descriptions, titles ≤ 65 characters, descriptions ≤ 160, one H1 per page, no duplicate IDs, every form field labelled, every image has alt text.
 - Canonical and `og:url` match the file path on every page. `sitemap.xml` is valid with 65 URLs, exactly matching the indexable inventory. `robots.txt` points to it.
 - JSON-LD parses everywhere: HomeAndConstructionBusiness ×1, WebSite ×1, Service ×52, BreadcrumbList ×65, ItemList ×1, ContactPage ×1, WebApplication ×1.
 - All 13 service pages have 500–600 words of main content. The 39 city pages have 358–430 words each, and the highest overlap between any two city pages is 39%.
 - Contrast ≥ 4.5:1 on all key colour pairs. No template tokens or placeholder text. No "best / #1 / guarantee / years of experience / star rating" claims. Legal links in every footer. Demo banner on every page.
-- Opening animation is on exactly the 65 indexable pages, never the 404 or thank-you page. The estimate page carries the config prices; the home picker submits to it. The scroll sequence has one complete fence build per offered fence type.
-- Removing services was tested (composite, staining and farm removed): their pages, links, menu items, the composite fence in the scroll sequence, the composite estimate material and the stain extra disappear, and the sentences that mention them are listed for rewording.
+- Opening animation is on exactly the 65 indexable pages, never the 404 or thank-you page. The estimate page carries the config prices; the home picker submits to it.
+- Removing services was tested (composite, staining and farm removed): their pages, links, menu items, the composite estimate material and the stain extra disappear, and the sentences that mention them are listed for rewording.
 
-**Browser QA** (`python3 _build/qa_browser.py --axe axe.min.js`, headless Chromium at 1440×900 and 390×844, output in `_build/qa-browser-latest.txt`): 35 passed, 0 failed.
+**Browser QA** (`python3 _build/qa_browser.py --axe axe.min.js`, headless Chromium at 1440×900 and 390×844, output in `_build/qa-browser-latest.txt`): 32 passed, 0 failed.
 - **3D yard scene:** pinned; the fence builds around the yard (feet counter climbs to 256), messages play, all four tags flip to Protected and the estimate card appears at the end. With three.js blocked, the page falls back to the normal, unpinned hero with the SVG fence line.
 - Opening animation plays when landing on a service page, builds the gates (3 posts, 20 pickets), swings them open, clears itself and doesn't replay on the next page. Skipped for a `#hash` and reduced motion; a click skips it.
 - Hero fence line draws and every picket rises. Home page CLS under 0.01.
-- **Scroll sequence:** for each of the 5 fence types, the posts are not yet in at the start of its slot and every post, picket/panel/board and cap is fully in place by the end; the sequence finishes on "Built, 100%". With reduced motion there's no pinning and all five fences show fully built.
 - Services dropdown opens inside the window and Escape closes it. Mobile menu and mobile call bar work.
 - **Instant estimate:** all 126 material × height × ground × length combinations match prices recalculated from `site.config.json`; gates, removal and extras add correctly; extras that don't apply to a material are hidden; the preview switches material; "measure my yard" gives 270 ft for a 50 × 110 ft yard fenced on three sides; the lead form opens with every choice filled in; empty submit is blocked; the live price bar shows on phones.
 - Contact form blocks empty submissions and flags invalid email.
@@ -41,7 +40,6 @@ Template build: October 27, 2026. Sample business "Stakeline Fence Co." with pla
 | Form recipient + FormSubmit activation | `form_endpoint` |
 | Google Business Profile and social URLs | `site.config.json` |
 | Confirm hero badges and working standards are true (locates every job, posts below frost, written quotes) | `_build/pages.py` (`tags`, `features`, `statement_points`) |
-| Lifespan and upkeep figures in the scroll sequence match what they tell customers | `pages.py` → `fence_types` |
 | Real About story, insurance and WSIB, warranties, suppliers | `pages.py` → `about` |
 | Real job photos | `photos` in config |
 | Confirm the yard scene's messages fit the client (family, pets, belongings, privacy) | `pages.py` → `yard` |

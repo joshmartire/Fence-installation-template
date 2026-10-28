@@ -4,7 +4,6 @@ A reusable, production-ready static website for fence contractors and fence inst
 
 The home page opens on a **3D backyard that gets fenced in as you scroll**: a string line goes down, posts drop in around the perimeter, pickets close in behind them while the camera flies around the yard and the messages change (your family, your pets, your belongings, your privacy), the sun sets, the gate swings shut and latches, the lights come on, and tags over the family, the dog, the shed and the pool flip to "Protected" before the estimate card appears. It's drawn with three.js (self-hosted, no outside requests); without WebGL or with reduced motion it falls back to the normal hero with the SVG fence line.
 
-Further down is a **pinned scroll sequence that builds every fence type from the ground up**: as the visitor scrolls, post holes are dug, posts drop in, concrete footings pour below the frost line, rails slide in, then pickets, panels, mesh or boards go on and the caps pop on, before the finished fence sinks away and the next one starts. Wood, vinyl, ornamental aluminum, chain link and composite, one after another.
 
 It also includes an **instant fence estimate**: material, height, length (with a "measure my yard" helper), ground, gates, old fence removal and extras, priced from the client's own per-foot rates.
 
@@ -16,7 +15,7 @@ Demo: `rankboss-fence.pages.dev` (noindexed). Same engine as the HVAC and roofin
 
 | Section | Pages |
 |---|---|
-| Home | 1: "gates" opening animation (posts slam in, pickets rain down, the name is branded in, the gates swing open), perspective fence-line hero with a material picker, the pinned fence-build sequence, estimate teaser with a yard plan, "know the line" locates band |
+| Home | 1: "gates" opening animation (posts slam in, pickets rain down, the name is branded in, the gates swing open), perspective fence-line hero with a material picker, estimate teaser with a yard plan, "know the line" locates band |
 | Instant Fence Estimate | 1 (`/fence-estimate/`), with a live preview of the chosen fence |
 | Services hub + 13 service pages | 14 (500–600 words each, including costs and FAQs) |
 | Service × city pages (13 × 3) | 39 (local intro, local conditions, by-laws/permits/locates, hiring checklist) |
@@ -61,7 +60,7 @@ Demo: `rankboss-fence.pages.dev` (noindexed). Same engine as the HVAC and roofin
 
 1. Edit `_build/site.config.json`: business name, legal name, domain, phone, email, hours, address (or `null` for a service-area business), Google Business Profile, social profiles.
 2. Brand and offer:
-   - `services`: delete any slug the client doesn't offer. Its pages, menu and footer links, sitemap entries, form options, **its fence in the scroll sequence** and **its estimate material** disappear. Fix any sentences listed in `_build/removed-service-mentions.txt` (QA fails while it exists).
+   - `services`: delete any slug the client doesn't offer. Its pages, menu and footer links, sitemap entries, form options and **its estimate material** disappear. Fix any sentences listed in `_build/removed-service-mentions.txt` (QA fails while it exists).
    - `accent` (main brand colour for buttons and highlights) and `accent_alt` (the steel second colour), both `#rrggbb`. The build stops if either is too dark to read.
    - `logo`: client logo in `assets/img/client/` (transparent PNG best).
    - `photos`: the client's own job photos only (see `_build/photos.py`).
@@ -86,14 +85,6 @@ Demo: `rankboss-fence.pages.dev` (noindexed). Same engine as the HVAC and roofin
 ## The 3D yard scene: how it works
 
 The home hero is pinned for about six screens. `yard.js` turns scroll position into progress `p` (0–1), eased so the camera glides: 0–0.11 hero copy over an aerial view of the open yard; 0.06–0.18 a string line and stakes trace the fence line; 0.16–0.80 the fence is built around the 256 ft perimeter (posts drop in, rails run, pickets drop in behind, a warm light and sparks follow the build) while the camera moves around the yard through eight keyframes and four messages play; 0.80–0.88 the gate swings shut; 0.55–0.95 the sun sets and the house, string lights, pool and post-cap lights come on; after 0.87 the four tags flip to "Protected" and the estimate card appears. The HUD shows the build step, feet built and a progress bar. The fence, posts and pickets are instanced (one draw call each), shadows are on for desktop only, and rendering pauses when the hero is off screen. On phones the camera pulls back and widens, and the estimate card only appears at the end.
-
-## The fence-type scroll sequence: how it works
-
-The section is (number of fence types + 1) screens tall and pins the drawing in place. Each fence type gets one screen of scrolling. `main.js` turns the scroll position into a build progress `--b` (0–1) on the current fence card and nothing else; every part of the drawing carries its own start and duration (`--s`, `--d`) on that 0–1 timeline, and CSS works out its motion: holes scale down into the clay, dirt piles appear, posts drop in with an ease-out and a puff of dust, concrete fills the holes from the bottom, rails extend from post to post, pickets/panels/boards drop or slide in one after another (chain link mesh is woven across as a roll travels the line), then caps and trim pop on and a "BUILT" stamp lands. At the end of its slot, the fence sinks away and the next one starts digging. A readout shows the type (01/05), the current step ("Pouring footings") and the build percentage, with a six-step progress strip underneath.
-
-Timeline: dig 0.02–0.20 · posts 0.12–0.30 · concrete 0.26–0.40 · rails 0.36–0.52 · infill 0.48–0.82 · caps 0.82–0.90 · built 0.88.
-
-On phones it's the same build, stacked under the heading with one fence description at a time. With reduced motion or without JavaScript, there's no pinning: all five fences are shown fully built in a grid with their names. To add a sixth fence type, add it to `TYPES` in `fence_art.py` with a drawing function and an entry in `pages.py` → `fence_types`.
 
 ## Opening animation: "the gates"
 

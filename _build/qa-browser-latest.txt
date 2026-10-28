@@ -7,12 +7,9 @@ PASS A click skips the intro
 PASS Without WebGL/three.js: normal hero (not pinned) with the SVG fence line drawn and every picket risen
 PASS 3D yard scene: pinned, fence builds around the yard (footage climbs to 256 ft), messages show, all 4 tags flip to Protected, estimate card appears at the end
 PASS Home page layout shift (CLS) 0.010 < 0.1
-PASS Pinned sequence builds all 5 fence types from empty holes to finished fence as you scroll
-PASS Sequence ends on the last fence fully built (Built, 100%)
 PASS Services dropdown opens and stays inside the window
 PASS Escape closes the dropdown
 PASS Hero material picker opens the estimate with that material selected
-PASS Reduced motion: no pinning, every fence shown fully built
 PASS Default estimate matches config ($7,650 – $9,750)
 PASS Every material × height × ground × length combination matches the config (126 checked)
 PASS Gates, old fence removal and extras are added to the estimate
@@ -34,4 +31,4 @@ PASS axe WCAG 2.1 AA on /contact/: 0 violations
 PASS axe WCAG 2.1 AA on /service-areas/windsor/: 0 violations
 PASS No JavaScript errors in the console (0)
 
-35 passed, 0 failed
+32 passed, 0 failed

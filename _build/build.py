@@ -842,7 +842,6 @@ def build_home():
 <div class="statement__foot" data-stagger>{foot}</div>
 </div>
 </section>
-{sequence_html(p)}
 <section class="section" aria-labelledby="services-title">
 <div class="wrap">
 <div class="sec-head"><div><p class="eyebrow">What we do</p><h2 class="display h-xl" id="services-title" data-reveal="rise">Fences. Gates.<br><span class="outline">Done right.</span></h2></div><p class="lead" data-reveal="up">{p["services_lead"]}</p></div>
@@ -1150,7 +1149,6 @@ def main():
     if EST_ON:
         print("Instant estimate: " + ", ".join(f'{x["label"]} ${x["per_ft"]}/ft' for x in EST["materials"]) + f" (±{EST['range_pct']}%)."
               + (" CLIENT INPUT NEEDED: set the client's real installed prices." if CFG.get("demo_mode") else ""))
-    print(f"Scroll sequence fences: {', '.join(t['name'] for t in FENCE_TYPES) or 'none (no fence types offered)'}")
 
 if __name__ == "__main__":
     main()
